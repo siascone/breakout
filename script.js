@@ -25,6 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var score = 0;
 
+    var lives = 3;
+
+    var playing = false;
+
     var bricks = [];
     for (let c = 0; c < brickColumnCount; c++) {
         bricks[c] = [];
@@ -71,8 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         score++;
                         if (score == brickColumnCount*brickRowCount) {
                             alert('YOU WIN, CONGRATULATIONS!');
+                            playing = false;
                             document.location.reload();
-                            clearInterval(interval);
                         }
                     }
                 }
@@ -80,10 +84,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function drawLives() {
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#CB4154';
+        ctx.fillText('Lives: '+lives, canvas.width-65, 20)
+    }
+
     function drawScore() {
         ctx.font = '16px Arial';
         ctx.fillStyle = '#CB4154';
         ctx.fillText("Score: "+score, 8, 20)
+    }
+
+    function drawStart() {
+        drawBricks();
+        drawBall();
+        drawPaddle();
+        drawScore();
+        drawLives();
+        ctx.font = '28px Arial';
+        ctx.fillStyle = '#CB4154';
+        ctx.fillText("Click to Play", (canvas.width/2)-75, (canvas.height/2)+14)
     }
 
     function drawBall() {
@@ -132,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         drawBall();
         drawPaddle();
         drawScore();
+        drawLives();
         collisionDetection();
 
         if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
@@ -144,9 +166,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (x > paddleX && x < paddleX + paddleWidth) {
                 dy = -dy;
             } else {
-                alert('GAME OVER');
-                document.location.reload();
-                clearInterval(interval);
+                lives--;
+                if (!lives) {
+                    alert('GAME OVER');
+                    playing = false;
+                    document.location.reload();
+                } else {
+                    x = canvas.width/2;
+                    y = canvas.height-30;
+                    dx = 2;
+                    dy = -2;
+                    paddleX = (canvas.width-paddleWidth)/2
+                }
+               
             }            
         }
 
@@ -164,8 +196,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         x += dx;
         y += dy;
+
+        requestAnimationFrame(draw);
     }
 
-    var interval = setInterval(draw, 10);
+    // var interval = setInterval(draw, 10);
+    ctx.canvas.addEventListener('click', () => {
+        if (!playing) {
+            playing = true
+            draw();
+        }
+    })
+    drawStart();
 
 });
