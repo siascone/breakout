@@ -7,4 +7,12 @@ canvas {
     background: #eee;
     display: block;
     margin: 0 auto;
+    margin-top: 25px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 20px;
 }
