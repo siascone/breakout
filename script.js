@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function drawScore() {
         ctx.font = '16px Arial';
-        ctx.fillStyle = '#0095DD';
+        ctx.fillStyle = '#CB4154';
         ctx.fillText("Score: "+score, 8, 20)
     }
 
@@ -82,15 +82,19 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.beginPath();
         ctx.arc(x, y, ballRadius, 0, Math.PI*2);
         ctx.fillStyle = '#0095DD';
+        ctx.strokeStyle = 'black';
         ctx.fill();
+        ctx.stroke();
         ctx.closePath();
     }
 
     function drawPaddle() {
         ctx.beginPath();
         ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-        ctx.fillStyle = '#0095DD';
+        ctx.fillStyle = '#CB4154';
+        ctx.strokeStyle = 'black';
         ctx.fill();
+        ctx.stroke();
         ctx.closePath();
     }
 
@@ -104,8 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     bricks[c][r].y = brickY;
                     ctx.beginPath();
                     ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                    ctx.fillStyle = '#0095DD';
+                    ctx.fillStyle = '#CB4154';
+                    ctx.strokeStyle = 'black';
                     ctx.fill();
+                    ctx.stroke();
                     ctx.closePath();
                 }
             }

@@ -11,6 +11,8 @@ canvas {
 }
 
 .header {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #CB4154;
     display: flex;
     justify-content: center;
     width: 100%;
