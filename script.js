@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     var brickOffsetTop = 30;
     var brickOffsetLeft = 30;
 
+    var score = 0;
+
     var bricks = [];
     for (let c = 0; c < brickColumnCount; c++) {
         bricks[c] = [];
@@ -58,10 +60,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
                         dy = -dy;
                         b.status = 0;
+                        score++;
+                        if (score == brickColumnCount*brickRowCount) {
+                            alert('YOU WIN, CONGRATULATIONS!');
+                            document.location.reload();
+                            clearInterval(interval);
+                        }
                     }
                 }
             }
         }
+    }
+
+    function drawScore() {
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#0095DD';
+        ctx.fillText("Score: "+score, 8, 20)
     }
 
     function drawBall() {
@@ -103,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         drawBricks();
         drawBall();
         drawPaddle();
+        drawScore();
         collisionDetection();
 
         if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
